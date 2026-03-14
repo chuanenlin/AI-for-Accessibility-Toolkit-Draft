@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+title: AI for Accessibility Toolkit
+message: If you use this toolkit, please cite it using the metadata from this file.
+type: software
+authors:
+  - name: AI for Accessibility Collective
+url: https://github.com/chuanenlin/AI-for-Accessibility-Toolkit-Draft
+repository-code: https://github.com/chuanenlin/AI-for-Accessibility-Toolkit-Draft
+abstract: AI agents that adapt the web to each user's abilities.
+keywords:
+  - accessibility
+  - agents
+  - assistive technology
+  - web accessibility
+  - ability-based design
+  - WCAG
+license: Apache-2.0
+date-released: "2026-03-13"
