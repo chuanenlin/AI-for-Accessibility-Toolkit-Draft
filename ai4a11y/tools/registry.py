@@ -2,7 +2,11 @@
 
 from __future__ import annotations
 
+import logging
+
 from ai4a11y.tools.base import BaseTool, BaseTransform
+
+logger = logging.getLogger(__name__)
 
 
 class ToolRegistry:
@@ -76,12 +80,18 @@ class ToolRegistry:
         from importlib.metadata import entry_points
 
         for ep in entry_points(group="ai4a11y.tools"):
-            cls = ep.load()
-            self.register_tool(cls())
+            try:
+                cls = ep.load()
+                self.register_tool(cls())
+            except Exception as e:
+                logger.warning("Failed to load tool %r: %s", ep.name, e)
 
         for ep in entry_points(group="ai4a11y.transforms"):
-            cls = ep.load()
-            self.register_transform(cls())
+            try:
+                cls = ep.load()
+                self.register_transform(cls())
+            except Exception as e:
+                logger.warning("Failed to load transform %r: %s", ep.name, e)
 
     def teardown_all(self) -> None:
         """Teardown all registered tools."""

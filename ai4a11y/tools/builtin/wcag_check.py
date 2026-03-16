@@ -43,10 +43,12 @@ class WCAGCheckTool(BaseTool):
 
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
-            bp = browser.new_page()
-            bp.goto(page.url, wait_until="domcontentloaded")
-            issues = self._run_axe(bp)
-            browser.close()
+            try:
+                bp = browser.new_page()
+                bp.goto(page.url, wait_until="domcontentloaded")
+                issues = self._run_axe(bp)
+            finally:
+                browser.close()
 
         return issues
 

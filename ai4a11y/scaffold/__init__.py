@@ -219,10 +219,12 @@ def _create_project(
     package_name = _to_package_name(name)
 
     base = Path(name)
+    if base.exists():
+        raise FileExistsError(f"Directory '{base}' already exists. Choose a different name or remove it first.")
     pkg = base / package_name
     tests = base / "tests"
 
-    os.makedirs(pkg, exist_ok=True)
+    os.makedirs(pkg)
     os.makedirs(tests, exist_ok=True)
 
     ctx = dict(

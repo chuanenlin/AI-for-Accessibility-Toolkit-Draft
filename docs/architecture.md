@@ -79,7 +79,8 @@ Analyzes the page and plans which tools to run for each user.
 
 | Profile | Sub-profiles | Primary needs |
 |---------|-------------|--------------|
-| `blv` | `blind`, `low_vision`, `color_blind` | Screen reader, audio-first, high contrast, magnification |
+| `blv` | `blind`, `low_vision` | Screen reader, audio-first, high contrast, magnification |
+| `color_blind` | | Color-safe design: no color-only info, patterns, labels |
 | `dhh` | `deaf`, `hard_of_hearing` | Captions, visual emphasis, sign language |
 | `motor` | `limited_mobility`, `tremor` | Keyboard-only, switch access, voice control |
 | `cognitive` | `dyslexia`, `idd`, `autism` | Plain language, simplified UI, predictable navigation |

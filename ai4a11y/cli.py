@@ -252,7 +252,17 @@ def _print_adapt_json(result: AuditResult):
         "url": result.url,
         "tools_run": result.tools_run,
         "plan": result.plan,
-        "issues": len(result.issues),
+        "issues": [
+            {
+                "rule_id": i.rule_id,
+                "severity": i.severity.value,
+                "description": i.description,
+                "selector": i.selector,
+                "wcag_criteria": i.wcag_criteria,
+                "help_url": i.help_url,
+            }
+            for i in result.issues
+        ],
         "adaptations": [
             {
                 "action": a.action,

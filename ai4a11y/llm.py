@@ -55,7 +55,12 @@ class LLMClient:
             raise ValueError(f"Unknown provider: {provider!r}. Use: {', '.join(DEFAULTS)}")
         self.provider = provider
         self.model = model or DEFAULTS[provider]
-        self.api_key = api_key or os.environ.get(ENV_KEYS[provider], "")
+        self.api_key = api_key or os.environ.get(ENV_KEYS[provider]) or ""
+        if not self.api_key:
+            logger.warning(
+                "No API key for %r. Set %s or pass api_key=.",
+                provider, ENV_KEYS[provider],
+            )
 
     def complete(self, system: str, prompt: str) -> str:
         """Get a text completion from the LLM.
@@ -73,7 +78,8 @@ class LLMClient:
             return self._complete_openai(system, prompt)
         elif self.provider == "google":
             return self._complete_google(system, prompt)
-        raise ValueError(f"Unknown provider: {self.provider}")
+        else:
+            raise ValueError(f"Unknown provider: {self.provider}")
 
     def complete_json(self, system: str, prompt: str) -> dict:
         """Get a JSON completion from the LLM.

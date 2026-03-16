@@ -59,6 +59,10 @@ class Orchestrator:
         from playwright.sync_api import sync_playwright
 
         plan = {}
+        page = None
+        all_issues = []
+        all_adaptations = []
+        tools_run = []
 
         registry = get_registry()
         try:
@@ -73,10 +77,6 @@ class Orchestrator:
                     page._browser_page = browser_page
 
                     # 2. Discover available tools
-                    all_issues = []
-                    all_adaptations = []
-                    tools_run = []
-
                     wcag = WCAGCheckTool()
 
                     registry.discover()
@@ -142,9 +142,13 @@ class Orchestrator:
                     browser.close()
 
             # Clean up browser page reference
-            page._browser_page = None
+            if page is not None:
+                page._browser_page = None
         finally:
             registry.teardown_all()
+
+        if page is None:
+            raise RuntimeError(f"Failed to load page: {self.app_agent.url}")
 
         # Sort issues by severity
         severity_order = {"critical": 0, "serious": 1, "moderate": 2, "minor": 3}

@@ -164,6 +164,8 @@ def get_profile(name: str) -> AbilityProfile:
 
 def combine_profiles(*names: str) -> AbilityProfile:
     """Combine multiple profiles into one (e.g., blv + motor)."""
+    if not names:
+        raise ValueError("combine_profiles() requires at least one profile name")
     profiles = [get_profile(n) for n in names]
     combined_needs = []
     combined_modalities = []
